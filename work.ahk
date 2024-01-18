@@ -29,6 +29,10 @@ ToggleTerminal()
         Run "c:\Users\marko\AppData\Local\Microsoft\WindowsApps\wt.exe"
         Sleep(1000)
         ShowWindow(WinMatcher)
+        Send("cd vagrant")
+        Send("{Enter}")
+        Send("vagrant up")
+        Send("{Enter}")
     }
 }
 
