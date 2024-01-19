@@ -1,13 +1,13 @@
 #Requires AutoHotKey v2.0
 
+F1::CheckActiveWindowClass()
+F8::ToggleVSCode()
+F9::ToggleSTS()
 F10::ToggleBrowser()
 F11::ToggleTerminal()
 
-CheckWindow(path, title) 
+CheckActiveWindowClass()
 {
-    Run(path)
-    WinWait(title)
-    WinActivate
     MsgBox(WinGetClass("A"))
 }
 
@@ -49,20 +49,31 @@ ToggleTerminal()
     }
 }
 
-ToggleBrowser()
+ToggleStandardWindow(WinMatcher, path)
 {
-    WinMatcher := "ahk_class MozillaWindowClass"
-
     if WinExist(WinMatcher)
     {
         HandleExistingWindow(WinMatcher)
     }
     else
     {
-        Run("C:\Program Files\Mozilla Firefox\firefox.exe")
-        Sleep(1000)
-        ShowWindow(WinMatcher)
+        Run(path)
     }
+}
+
+ToggleBrowser()
+{
+    ToggleStandardWindow("ahk_class MozillaWindowClass", "C:\Program Files\Mozilla Firefox\firefox.exe")
+}
+
+ToggleSTS()
+{
+    ToggleStandardWindow("ahk_class SWT_Window0", "C:\Users\mdurasinovic\Documents\sts-4.11.1.RELEASE\SpringToolSuite4.exe")
+}
+
+ToggleVSCode()
+{
+    ToggleStandardWindow("ahk_class Chrome_WidgetWin_1", "C:\Users\mdurasinovic\AppData\Local\Programs\Microsoft VS Code\Code.exe")
 }
 
 ; inspired by andrewgodwin https://gist.github.com/andrewgodwin/89920ee02501ab12d09b02500897066c
