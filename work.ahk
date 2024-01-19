@@ -1,10 +1,10 @@
 #Requires AutoHotKey v2.0
 
-F1::CheckActiveWindowClass()
-F8::ToggleVSCode()
-F9::ToggleSTS()
-F10::ToggleBrowser()
-F11::ToggleTerminal()
+!0::CheckActiveWindowClass()
+!1::ToggleVSCode()
+!2::ToggleSTS()
+!3::ToggleBrowser()
+!9::ToggleTerminal()
 
 CheckActiveWindowClass()
 {
