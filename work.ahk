@@ -29,35 +29,32 @@ HandleExistingWindow(WinMatcher)
     }
 }
 
-ToggleTerminal()
-{
-    WinMatcher := "ahk_class CASCADIA_HOSTING_WINDOW_CLASS"
-
-    if WinExist(WinMatcher)
-    {
-        HandleExistingWindow(WinMatcher)
-    }
-    else
-    {
-        Run("c:\Users\mdurasinovic\AppData\Local\Microsoft\WindowsApps\wt.exe")
-        Sleep(1000)
-        ShowWindow(WinMatcher)
-        Send("cd vagrant")
-        Send("{Enter}")
-        Send("vagrant up")
-        Send("{Enter}")
-    }
-}
-
 ToggleStandardWindow(WinMatcher, path)
 {
     if WinExist(WinMatcher)
     {
         HandleExistingWindow(WinMatcher)
+        return "EXISTING"
     }
     else
     {
         Run(path)
+        return "NEW"
+    }
+}
+
+ToggleTerminal()
+{
+    WinMatcher := "ahk_class CASCADIA_HOSTING_WINDOW_CLASS"
+    Result := ToggleStandardWindow(WinMatcher, "c:\Users\mdurasinovic\AppData\Local\Microsoft\WindowsApps\wt.exe")
+    if (Result == "NEW")
+    {
+        Sleep(1000)
+        WinActivate(WinMatcher)
+        Send("cd vagrant")
+        Send("{Enter}")
+        Send("vagrant up")
+        Send("{Enter}")
     }
 }
 
@@ -75,5 +72,3 @@ ToggleVSCode()
 {
     ToggleStandardWindow("ahk_class Chrome_WidgetWin_1", "C:\Users\mdurasinovic\AppData\Local\Programs\Microsoft VS Code\Code.exe")
 }
-
-; inspired by andrewgodwin https://gist.github.com/andrewgodwin/89920ee02501ab12d09b02500897066c
